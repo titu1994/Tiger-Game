@@ -16,7 +16,7 @@ Observations can be checked by self.observations and actions can be
 taken using self.actions as shown in the example code (which uses
 Leslie Kaelbling's optimal Finite State Machine model for the Tiger game).
 
-To run the code, use `python tigergame.py`.
+To run the code, open a terminal / command line prompt at this location in the repository and use `python tigergame.py`.
 To run with arguments use `python tigergame.py -v -t 1e5 -a 0.8 ...`
 
 Parameters

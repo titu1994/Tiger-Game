@@ -36,11 +36,17 @@ class Agent(object):
             else:
                 self.right_listen_count += 1
 
-            # perform belief update
+            # perform action
             if self.left_listen_count == 2:
+                # reset listen count since we made an informed decision
+                self.left_listen_count = 0
                 return self.actions.ACTION_OPEN_RIGHT
+
             elif self.right_listen_count == 2:
+                # reset listen count since we made an informed decision
+                self.right_listen_count = 0
                 return self.actions.ACTION_OPEN_LEFT
+
             elif self.left_listen_count >= 1 and self.right_listen_count >= 1:
                 # we obtained dis-confirming growls. Reset our belief state
                 self.left_listen_count = 0

@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from __future__ import division
 
 import argparse
+import time
 
 from agent import Agent
 from engine import Game
@@ -37,4 +38,9 @@ if __name__ == "__main__":
     game = Game(agent, listening_acc, reward_val, listening_penalty,
                 tiger_penalty, seed, verbose)
 
+    t1 = time.time()
     game.play_rounds(nb_rounds=nb_iterations)
+    t2 = time.time()
+
+    print()
+    print("Played %d games in time : %0.4f seconds" % (nb_iterations, t2 - t1))

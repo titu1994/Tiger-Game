@@ -1,5 +1,6 @@
 # Tiger Game in Python
-Tiger Game in Python 2.7 / 3.4+
+Tiger Game in Python 2.7 / 3.4+, based on the paper [Planning and acting in partially observable
+stochastic domains](http://people.csail.mit.edu/lpk/papers/aij98-pomdp.pdf) by Leslie Kaelbling et al.
 
 Requirements
 --------------------------------------

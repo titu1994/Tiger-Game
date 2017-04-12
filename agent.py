@@ -4,7 +4,7 @@ from __future__ import division
 
 import random
 
-from engine import Action, Observations
+from consts import Action, Observations
 
 AGENT_NAME = "Smith"
 

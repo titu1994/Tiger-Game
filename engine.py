@@ -5,8 +5,8 @@ from __future__ import division
 import random
 from joblib import Parallel, delayed
 
-class ConstError(TypeError): pass
-
+from consts import Action, Observations
+from agent import Agent
 
 ACTION_NAMES = {0 : "Listen",
                 1 : "Open Left",
@@ -17,38 +17,12 @@ OBSERVATION_NAMES = {0 : "No Observation",
                      1 : "Growl Left",
                      -1: "Growl Right"}
 
-class Action(object):
-    def __init__(self):
-        self.ACTION_OPEN_LEFT = 1
-        self.ACTION_OPEN_RIGHT = -1
-        self.ACTION_LISTEN = 0
-
-    def __setattr__(self, key, value):
-        if key in self.__dict__:
-            raise ConstError('Cannot modify action : %s' % key)
-
-        self.__dict__[key] = value
-
-
-class Observations(object):
-    def __init__(self):
-        self.NO_OBSERVATION = 0
-        self.GROWL_LEFT = 1
-        self.GROWL_RIGHT = -1
-
-    def __setattr__(self, key, value):
-        if key in self.__dict__:
-            raise ConstError('Cannot modify Observation : %s' % key)
-
-        self.__dict__[key] = value
-
 
 class Game(object):
 
-    def __init__(self, agent, listening_accuracy=0.85, reward=10.,
+    def __init__(self, listening_accuracy=0.85, reward=10.,
                  listening_penaly=-1., tiger_penalty=-100., random_seed=None, verbose=False) :
 
-        self.agent = agent
         self.listening_acc = listening_accuracy
         self.reward = reward
         self.listening_penalty = listening_penaly
@@ -77,14 +51,17 @@ class Game(object):
         if self.verbose: print('*' * 80)
 
         self.__initialize_state()  # initialize the game
+        agent = Agent()
 
         if self.verbose: print("Observed : ", OBSERVATION_NAMES[0])
 
-        action = self.agent.act(self.observations.NO_OBSERVATION)  # initial action (unbiased observation)
+        action = agent.act(self.observations.NO_OBSERVATION)  # initial action (unbiased observation)
         self.score += self.__reward(action)
 
         if self.verbose: print("Performed action :", ACTION_NAMES[action])
         if self.verbose: print()
+
+        count = 1
 
         while not self.__check_open_wrong_door(action):
             if action in [self.actions.ACTION_OPEN_LEFT, self.actions.ACTION_OPEN_RIGHT]:
@@ -95,17 +72,19 @@ class Game(object):
 
             if self.verbose: print("Observed : ", OBSERVATION_NAMES[observation])
 
-            action = self.agent.act(observation)
+            action = agent.act(observation)
 
             if self.verbose: print("Performed action :", ACTION_NAMES[action])
             if self.verbose: print()
 
             self.score += self.__reward(action)
+            count += 1
 
         # game ending
         self.score += self.tiger_penalty
         if self.verbose: print("Game %d : " % (i + 1))
         if self.verbose: print(self)  # print game
+        if self.verbose: print("\nPlayed %d number of rounds in game %d" % (count, i + 1))
         if self.verbose: print()
 
         return self.score

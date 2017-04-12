@@ -34,8 +34,7 @@ if __name__ == "__main__":
         seed = None
     verbose = args.verbose
 
-    agent = Agent()
-    game = Game(agent, listening_acc, reward_val, listening_penalty,
+    game = Game(listening_acc, reward_val, listening_penalty,
                 tiger_penalty, seed, verbose)
 
     t1 = time.time()

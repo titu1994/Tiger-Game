@@ -33,3 +33,8 @@ however it is recommended to keep all parameters unchanged to conform to the ori
 -lp   :   Listening penalty     (default -1)  <br>
 -seed :   Random seed value     (default -1, which means no random seed)  <br>
 -v    :   Verbosity of the game (there is no default, add -v during execution to enable print statements) <br>
+
+Performance
+-----------
+
+100 million games with default settings - 4 minutes 16 seconds

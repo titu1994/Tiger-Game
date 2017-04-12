@@ -18,7 +18,7 @@ taken using self.actions as shown in the example code (which uses
 Leslie Kaelbling's optimal Finite State Machine model for the Tiger game).
 
 To run the code, open a terminal / command line prompt at this location in the repository and use `python tigergame.py`.
-To run with arguments use `python tigergame.py -v -t 1e5 -a 0.8 ...`
+To run with arguments use `python tigergame.py -v -load -t 1e5 -a 0.85 ...`
 
 Parameters
 --------------------------------------
@@ -26,13 +26,15 @@ Parameters
 There are various parameters which can be modified to alter the game behaviour,
 however it is recommended to keep all parameters unchanged to conform to the original paper.
 
--t    :   Number of iterations  (default 10000) <br>
+-i    :   Number of iterations  (default 10000) <br>
+-t    :   Number of timesteps   (default 100)   <br>
 -r    :   Default reward value  (default 10.0)  <br>
 -a    :   Listening accuracy    (default 0.85)  <br>
 -tp   :   Tiger penalty valye   (default -100)  <br>
 -lp   :   Listening penalty     (default -1)  <br>
 -seed :   Random seed value     (default -1, which means no random seed)  <br>
 -v    :   Verbosity of the game (there is no default, add -v during execution to enable print statements) <br>
+-load :   Load agent from file instead of creating new. (default is false, to enable just pass -load)
 
 Performance
 -----------

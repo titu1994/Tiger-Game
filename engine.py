@@ -6,7 +6,6 @@ import random
 from joblib import Parallel, delayed
 
 from consts import Action, Observations
-from agent import Agent
 
 ACTION_NAMES = {0 : "Listen",
                 1 : "Open Left",
@@ -20,11 +19,13 @@ OBSERVATION_NAMES = {0 : "No Observation",
 
 class Game(object):
 
-    def __init__(self, listening_accuracy=0.85, reward=10.,
+    def __init__(self, agent, listening_accuracy=0.85, reward=10., max_timesteps=100,
                  listening_penaly=-1., tiger_penalty=-100., random_seed=None, verbose=False) :
 
+        self.agent = agent
         self.listening_acc = listening_accuracy
         self.reward = reward
+        self.max_timesteps = max_timesteps
         self.listening_penalty = listening_penaly
         self.tiger_penalty = tiger_penalty
 
@@ -51,19 +52,17 @@ class Game(object):
         if self.verbose: print('*' * 80)
 
         self.__initialize_state()  # initialize the game
-        agent = Agent()
 
         if self.verbose: print("Observed : ", OBSERVATION_NAMES[0])
 
-        action = agent.act(self.observations.NO_OBSERVATION)  # initial action (unbiased observation)
-        self.score += self.__reward(action)
+        action = self.agent.act(self.observations.NO_OBSERVATION, 0)  # initial action (unbiased observation)
+        score = self.__reward(action)
+        self.score += score
 
         if self.verbose: print("Performed action :", ACTION_NAMES[action])
         if self.verbose: print()
 
-        count = 1
-
-        while not self.__check_open_wrong_door(action):
+        for t in range(self.max_timesteps):
             if action in [self.actions.ACTION_OPEN_LEFT, self.actions.ACTION_OPEN_RIGHT]:
                 self.__update_state(action)  # randomly update tiger location
                 observation = self.observations.NO_OBSERVATION  # no observation at this time
@@ -72,19 +71,18 @@ class Game(object):
 
             if self.verbose: print("Observed : ", OBSERVATION_NAMES[observation])
 
-            action = agent.act(observation)
+            action = self.agent.act(observation, score)
 
             if self.verbose: print("Performed action :", ACTION_NAMES[action])
             if self.verbose: print()
 
-            self.score += self.__reward(action)
-            count += 1
+            score = self.__reward(action)
+            self.score += score
 
         # game ending
         self.score += self.tiger_penalty
         if self.verbose: print("Game %d : " % (i + 1))
         if self.verbose: print(self)  # print game
-        if self.verbose: print("\nPlayed %d number of rounds in game %d" % (count, i + 1))
         if self.verbose: print()
 
         return self.score

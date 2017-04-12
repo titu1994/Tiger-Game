@@ -3,10 +3,28 @@ from __future__ import absolute_import
 from __future__ import division
 
 import random
+import joblib
+import os
 
 from consts import Action, Observations
 
 AGENT_NAME = "Smith"
+
+
+def serialize_agent(agent):
+    joblib.dump(agent, filename='agent.pkl')
+    print('Agent saved')
+
+
+def deserialize_agent():
+    if os.path.exists('agent.pkl'):
+        agent = joblib.load('agent.pkl')
+    else:
+        print("Agent data does not exist. Creating default agent.")
+        agent = Agent()
+
+    return agent
+
 
 class Agent(object):
 
@@ -18,7 +36,7 @@ class Agent(object):
         self.left_listen_count = 0
         self.right_listen_count = 0
 
-    def act(self, observation):
+    def act(self, observation, score):
         # Example of Leslie Kaelbling's optimal agent model,
         # minus the bottom part of the Finite State Machine
 

@@ -2,7 +2,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-import random
+import numpy as np
 from joblib import Parallel, delayed
 
 from consts import Action, Observations
@@ -32,7 +32,7 @@ class Game(object):
         self.actions = Action()
         self.observations = Observations()
 
-        random.seed(random_seed)
+        np.random.seed(random_seed)
         self.verbose = verbose
 
 
@@ -88,13 +88,13 @@ class Game(object):
         return self.score
 
     def __initialize_state(self):
-        self.__tiger_loc = 0 if random.random() < 0.5 else 1 # 0 indicates TL, 1 indicates TR
+        self.__tiger_loc = 0 if np.random.rand() < 0.5 else 1 # 0 indicates TL, 1 indicates TR
         self.score = 0.0
 
 
     def __update_state(self, action):
         if action in [self.actions.ACTION_OPEN_LEFT, self.actions.ACTION_OPEN_RIGHT]:
-            self.__tiger_loc = 0 if random.random() < 0.5 else 1  # 0 indicates TL, 1 indicates TR
+            self.__tiger_loc = 0 if np.random.rand() < 0.5 else 1  # 0 indicates TL, 1 indicates TR
 
 
     def __reward(self, action):
@@ -117,7 +117,7 @@ class Game(object):
 
 
     def __observe(self):
-        prob = random.random()
+        prob = np.random.rand()
 
         if prob <= self.listening_acc:
             if self.__tiger_loc == 0:

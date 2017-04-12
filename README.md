@@ -4,10 +4,13 @@ stochastic domains](http://people.csail.mit.edu/lpk/papers/aij98-pomdp.pdf) by L
 
 Requirements
 --------------------------------------
-Open a command prompt / terminal and execute : pip install joblib
+Open a command prompt / terminal and execute : `pip install joblib numpy`
 
 Joblib is a multiprocessing library required by this game engine to execute
 millions of runs in parallel on your machine.
+
+Numpy is the standard numeric library to handle large matrix manipulations, and is
+required for solving the problem using Evolution Strategies (ES).
 
 Agent
 --------------------------------------

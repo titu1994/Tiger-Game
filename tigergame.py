@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     if load_agent:
         print()
-        ch = input("Agent data already exists. Overwrite ? y/n")
+        ch = input("Agent data already exists. Overwrite ? y/n : ")
 
         if ch == 'y':
             serialize_agent(agent)

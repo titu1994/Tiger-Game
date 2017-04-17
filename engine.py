@@ -40,7 +40,7 @@ class Game(object):
         nb_rounds = int(nb_rounds)
         print("Playing Tiger game %d times" % (nb_rounds))
 
-        scores = Parallel(n_jobs=-2, verbose=1)(delayed(self._play_game)(i) for i in range(nb_rounds))
+        scores = Parallel(n_jobs=1, verbose=1)(delayed(self._play_game)(i) for i in range(nb_rounds))
 
         print('*' * 80)
         print()

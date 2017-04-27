@@ -6,7 +6,7 @@ import numpy as np
 import joblib
 import os
 
-from consts import Action, Observations
+from consts import *
 
 AGENT_NAME = "Smith"
 
@@ -36,7 +36,7 @@ class Agent(object):
         self.left_listen_count = 0
         self.right_listen_count = 0
 
-    def act(self, observation, score):
+    def act(self, observation, score, learn):
         # Example of Leslie Kaelbling's optimal agent model,
         # minus the bottom part of the Finite State Machine
 

@@ -44,8 +44,10 @@ if __name__ == "__main__":
     else:
         agent = Agent()
 
+    learn = True if not load_agent else False
+
     game = Game(agent, listening_acc, reward_val, nb_timesteps,
-           listening_penalty, tiger_penalty, seed, verbose)
+                listening_penalty, tiger_penalty, seed, verbose, learn)
 
     t1 = time.time()
     game.play_rounds(nb_rounds=nb_iterations)
@@ -54,12 +56,11 @@ if __name__ == "__main__":
     print()
     print("Played %d games in time : %0.4f seconds" % (nb_iterations, t2 - t1))
 
-    if load_agent:
-        print()
+    if not load_agent and os.path.exists('agent.pkl'):
         ch = input("Agent data already exists. Overwrite ? y/n : ")
 
         if ch == 'y':
+            print('Overwriting previous agent')
             serialize_agent(agent)
-
     else:
         serialize_agent(agent)

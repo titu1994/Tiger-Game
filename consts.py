@@ -3,6 +3,15 @@ from __future__ import absolute_import
 from __future__ import division
 
 
+ACTION_NAMES = {0 : "Listen",
+                1 : "Open Left",
+                -1: "Open Right"}
+
+
+OBSERVATION_NAMES = {0 : "No Observation",
+                     1 : "Growl Left",
+                     -1: "Growl Right"}
+
 class ConstError(TypeError): pass
 
 class Action(object):

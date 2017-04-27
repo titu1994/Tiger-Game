@@ -5,22 +5,14 @@ from __future__ import division
 import numpy as np
 from joblib import Parallel, delayed
 
-from consts import Action, Observations
+from consts import *
 
-ACTION_NAMES = {0 : "Listen",
-                1 : "Open Left",
-                -1: "Open Right"}
-
-
-OBSERVATION_NAMES = {0 : "No Observation",
-                     1 : "Growl Left",
-                     -1: "Growl Right"}
 
 
 class Game(object):
 
     def __init__(self, agent, listening_accuracy=0.85, reward=10., max_timesteps=100,
-                 listening_penaly=-1., tiger_penalty=-100., random_seed=None, verbose=False) :
+                 listening_penaly=-1., tiger_penalty=-100., random_seed=None, verbose=False, learn=True):
 
         self.agent = agent
         self.listening_acc = listening_accuracy
@@ -28,6 +20,7 @@ class Game(object):
         self.max_timesteps = max_timesteps
         self.listening_penalty = listening_penaly
         self.tiger_penalty = tiger_penalty
+        self.learn = learn
 
         self.actions = Action()
         self.observations = Observations()
@@ -55,7 +48,7 @@ class Game(object):
 
         if self.verbose: print("Observed : ", OBSERVATION_NAMES[0])
 
-        action = self.agent.act(self.observations.NO_OBSERVATION, 0)  # initial action (unbiased observation)
+        action = self.agent.act(self.observations.NO_OBSERVATION, 0, self.learn)  # initial action (unbiased observation)
         score = self.__reward(action)
         self.score += score
 
@@ -71,7 +64,7 @@ class Game(object):
 
             if self.verbose: print("Observed : ", OBSERVATION_NAMES[observation])
 
-            action = self.agent.act(observation, score)
+            action = self.agent.act(observation, score, self.learn)
 
             if self.verbose: print("Performed action :", ACTION_NAMES[action])
             if self.verbose: print()

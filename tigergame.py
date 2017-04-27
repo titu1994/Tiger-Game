@@ -62,5 +62,3 @@ if __name__ == "__main__":
         if ch == 'y':
             print('Overwriting previous agent')
             serialize_agent(agent)
-    else:
-        serialize_agent(agent)

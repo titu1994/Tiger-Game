@@ -22,6 +22,11 @@ Leslie Kaelbling's optimal Finite State Machine model for the Tiger game).
 To run the code, open a terminal / command line prompt at this location in the repository and use `python tigergame.py`.
 To run with arguments use `python tigergame.py -v -load -t 1e5 -a 0.85 ...`
 
+Note : The act() method in the agent has the observation, score and a mode parameter called `learn`.
+
+This `learn` parameter is to decide between training and testing time execution of the agent. If true, it means
+the agent must be trained, else it must only act without training the model further.
+
 Parameters
 --------------------------------------
 

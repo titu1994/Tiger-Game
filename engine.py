@@ -97,7 +97,7 @@ class Game(object):
             else:
                 return self.reward # Get the gold value
         else:
-            return self.listening_acc # Get listening penalty
+            return self.listening_penalty # Get listening penalty
 
 
     def __check_open_wrong_door(self, action):
